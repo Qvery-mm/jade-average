@@ -30,16 +30,21 @@ public class MainController {
         Map<String, Iterable<String>> internalGraph = new HashMap<>();
 
         // ring graph
-        for(int i = 1; i <= MainController.numberOfAgents; i++) {
-            if (i < MainController.numberOfAgents) {
-                List<String> neighbours = new ArrayList<>();
+        int total = MainController.numberOfAgents;
+        for(int i = 1; i <= total; i++) {
+            List<String> neighbours = new ArrayList<>();
+
+            if (1 < i && i < total) {
                 neighbours.add(String.valueOf(i+1));
-                internalGraph.put(String.valueOf(i), neighbours);
-            } else {
-                List<String> neighbours = new ArrayList<>();
+                neighbours.add(String.valueOf(i-1));
+            } else if (i == total) {
                 neighbours.add(String.valueOf(1));
-                internalGraph.put(String.valueOf(i), neighbours);
+                neighbours.add(String.valueOf(total - 1));
+            } else {
+                neighbours.add(String.valueOf(i+1));
+                neighbours.add(String.valueOf(total));
             }
+            internalGraph.put(String.valueOf(i), neighbours);
         }
 
         List<AgentController> acList = new ArrayList<>();
@@ -67,6 +72,7 @@ public class MainController {
                     //throw new RuntimeException(e);
                 }
             });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,6 +20,11 @@ public class DefaultAgent extends Agent implements IAgent {
         this.internalState = new AgentInternalState(random);
         this.agentId = agentId;
     }
+
+    public String getAgentId() {
+        return agentId;
+    }
+
     @Override
     protected void setup() {
         getAID().setLocalName(agentId);

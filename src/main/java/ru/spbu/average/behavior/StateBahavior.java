@@ -37,7 +37,9 @@ public class StateBahavior extends CyclicBehaviour {
         float x = this.agent.getInternalState().getValue();
         float y = neighbourInternalState.getValue();
 
-        float z = 1f / 2 * (y - x);
+        int neighboursCount = agent.getConfiguration().getNeighboursCount(agent.getAgentId());
+
+        float z = x +  1f / (1 + neighboursCount) * (y - x);
         this.agent.getInternalState().setValue(z);
 
     }

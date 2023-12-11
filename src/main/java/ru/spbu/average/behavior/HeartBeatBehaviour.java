@@ -24,6 +24,7 @@ public class HeartBeatBehaviour extends TickerBehaviour {
             this.currentStep++;
             block();
         } else {
+            System.out.printf("Agent %s; Result = %s\n", agent.getAgentId(), agent.getInternalState().getValue());
             this.stop();
         }
     }
@@ -34,9 +35,8 @@ public class HeartBeatBehaviour extends TickerBehaviour {
         msg.addReplyTo(agent.getAID());
         msg.setPerformative(ACLMessage.PROPOSE);
         msg.setContent("");
-        Iterable<String> neighbours = agent.getConfiguration().getNeighborAgentAddresses(agent.getAID().getName());
-        for(String neighbour : neighbours)
-        {
+        Iterable<String> neighbours = agent.getConfiguration().getNeighborAgentAddresses(agent.getAgentId());
+        for(String neighbour : neighbours) {
             msg.addReceiver(new AID(neighbour, false ));
         }
         agent.send(msg);

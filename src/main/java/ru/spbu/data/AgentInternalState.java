@@ -6,7 +6,7 @@ public class AgentInternalState {
     private float value;
 
     public AgentInternalState(Random random) {
-        this.value = random.nextInt();
+        this.value = random.nextInt() % 100;
     }
 
     public float getValue() {
