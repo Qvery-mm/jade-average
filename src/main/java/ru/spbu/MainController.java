@@ -10,7 +10,7 @@ import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 import ru.spbu.agent.DefaultAgent;
 import ru.spbu.average.behavior.HeartBeatBehaviour;
-import ru.spbu.average.behavior.StateBahavior;
+import ru.spbu.average.behavior.StateBehavior;
 import ru.spbu.configuration.ImmutableConfiguration;
 
 
@@ -55,7 +55,7 @@ public class MainController {
                 DefaultAgent agent = new DefaultAgent(String.valueOf(i), random);
 
                 List<Behaviour> behaviors = new ArrayList<>() ;
-                behaviors.add(new StateBahavior(agent));
+                behaviors.add(new StateBehavior(agent));
                 behaviors.add(new HeartBeatBehaviour(agent, 100));
 
                 agent.setConfiguration(immutableConfiguration);
