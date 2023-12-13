@@ -9,7 +9,7 @@ import ru.spbu.agent.DefaultAgent;
 public class HeartBeatBehaviour extends TickerBehaviour {
     private final DefaultAgent agent;
     private int currentStep;
-    private final int MAX_STEPS = 10;
+    private final int MAX_STEPS = 100;
     public HeartBeatBehaviour(DefaultAgent agent, long period) {
         super(agent, period);
         this.setFixedPeriod(true);

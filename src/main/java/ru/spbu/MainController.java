@@ -56,7 +56,7 @@ public class MainController {
 
                 List<Behaviour> behaviors = new ArrayList<>() ;
                 behaviors.add(new StateBahavior(agent));
-                behaviors.add(new HeartBeatBehaviour(agent, 1000));
+                behaviors.add(new HeartBeatBehaviour(agent, 100));
 
                 agent.setConfiguration(immutableConfiguration);
                 agent.setBehaviours(behaviors);
