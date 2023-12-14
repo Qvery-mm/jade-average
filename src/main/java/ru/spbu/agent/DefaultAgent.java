@@ -28,7 +28,7 @@ public class DefaultAgent extends Agent implements IAgent {
     @Override
     protected void setup() {
         getAID().setLocalName(agentId);
-        System.out.printf("Agent #%s; value = %s%n", agentId, internalState.getValue());
+//        System.out.printf("Agent #%s; value = %s%n", agentId, internalState.getValue());
         for(Behaviour behaviour : behaviours) {
             addBehaviour(behaviour);
         }

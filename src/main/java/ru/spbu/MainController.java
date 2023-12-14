@@ -11,6 +11,7 @@ import jade.wrapper.StaleProxyException;
 import ru.spbu.agent.DefaultAgent;
 import ru.spbu.average.behavior.HeartBeatBehaviour;
 import ru.spbu.average.behavior.StateBehavior;
+import ru.spbu.configuration.DynamicConfiguration;
 import ru.spbu.configuration.ImmutableConfiguration;
 
 
@@ -29,28 +30,29 @@ public class MainController {
         ContainerController cc = rt.createMainContainer(p);
         Map<String, Iterable<String>> internalGraph = new HashMap<>();
 
-        // ring graph
-        int total = MainController.numberOfAgents;
-        for(int i = 1; i <= total; i++) {
-            List<String> neighbours = new ArrayList<>();
-
-            if (1 < i && i < total) {
-                neighbours.add(String.valueOf(i+1));
-                neighbours.add(String.valueOf(i-1));
-            } else if (i == total) {
-                neighbours.add(String.valueOf(1));
-                neighbours.add(String.valueOf(total - 1));
-            } else {
-                neighbours.add(String.valueOf(i+1));
-                neighbours.add(String.valueOf(total));
-            }
-            internalGraph.put(String.valueOf(i), neighbours);
-        }
+//        // ring graph
+//        int total = MainController.numberOfAgents;
+//        for(int i = 1; i <= total; i++) {
+//            List<String> neighbours = new ArrayList<>();
+//
+//            if (1 < i && i < total) {
+//                neighbours.add(String.valueOf(i+1));
+//                neighbours.add(String.valueOf(i-1));
+//            } else if (i == total) {
+//                neighbours.add(String.valueOf(1));
+//                neighbours.add(String.valueOf(total - 1));
+//            } else {
+//                neighbours.add(String.valueOf(i+1));
+//                neighbours.add(String.valueOf(total));
+//            }
+//            internalGraph.put(String.valueOf(i), neighbours);
+//        }
 
         List<AgentController> acList = new ArrayList<>();
         try {
             ImmutableConfiguration immutableConfiguration = new ImmutableConfiguration(internalGraph);
-            for(int i = 1; i <= MainController.numberOfAgents; i++) {
+            DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(5, 6);
+            for(int i = 0; i < MainController.numberOfAgents; i++) {
 
                 DefaultAgent agent = new DefaultAgent(String.valueOf(i), random);
 
@@ -58,12 +60,13 @@ public class MainController {
                 behaviors.add(new StateBehavior(agent));
                 behaviors.add(new HeartBeatBehaviour(agent, 100));
 
-                agent.setConfiguration(immutableConfiguration);
+                agent.setConfiguration(dynamicConfiguration);
                 agent.setBehaviours(behaviors);
 
                 acList.add(cc.acceptNewAgent(Integer.toString(i), agent));
 
             }
+            dynamicConfiguration.start();
             acList.forEach((ac) -> {
                 try {
                     ac.start();

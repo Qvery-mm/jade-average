@@ -2,7 +2,6 @@ package ru.spbu.agent;
 import java.lang.Iterable;
 
 import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.SimpleBehaviour;
 import ru.spbu.configuration.IAgentConfiguration;
 import ru.spbu.data.AgentInternalState;
 

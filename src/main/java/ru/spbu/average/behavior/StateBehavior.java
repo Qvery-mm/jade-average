@@ -43,7 +43,7 @@ public class StateBehavior extends CyclicBehaviour {
         Queue<Float> queue = agent.getInternalState().getQueue();
         queue.add(y);
 
-        System.out.printf("Queue length %s\n", queue.size());
+//        System.out.printf("Queue length %s\n", queue.size());
 
         if (queue.size() < neighboursCount) {
             return;
