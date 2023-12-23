@@ -8,6 +8,7 @@ import ru.spbu.agent.DefaultAgent;
 import ru.spbu.data.AgentInternalState;
 
 import java.util.Queue;
+import java.util.Random;
 
 public class StateBehavior extends CyclicBehaviour {
 
@@ -43,9 +44,7 @@ public class StateBehavior extends CyclicBehaviour {
         Queue<Float> queue = agent.getInternalState().getQueue();
         queue.add(y);
 
-//        System.out.printf("Queue length %s\n", queue.size());
-
-        if (queue.size() < neighboursCount) {
+        if (queue.size() < 1) {
             return;
         }
 
@@ -53,7 +52,7 @@ public class StateBehavior extends CyclicBehaviour {
         while (!queue.isEmpty()) {
             summary += (queue.remove() - x);
         }
-        float z = x + 1f / (1 + neighboursCount) * summary;
+        float z = x + 1f / (10 + neighboursCount) * summary;
         this.agent.getInternalState().setValue(z);
     }
 
@@ -61,8 +60,26 @@ public class StateBehavior extends CyclicBehaviour {
         ACLMessage reply = msg.createReply();
         reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
         AgentInternalState agentInternalState = agent.getInternalState();
+
+        Random random = new Random(42);
+        double variance = 0.1f;
+        double noize1 = random.nextGaussian() * Math.sqrt(variance);
+        double noize2 = random.nextGaussian() * Math.sqrt(variance);
+
+        AgentInternalState noisedInternalState = new AgentInternalState(random);
+        noisedInternalState.setValue(agentInternalState.getValue() + (float) noize1);
+
+        try {
+            Thread.sleep((long) (10 + noize2));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Gson gson = new Gson();
-        reply.setContent(gson.toJson(agentInternalState));
+        reply.setContent(gson.toJson(noisedInternalState));
         agent.send(reply);
     }
+
+
+
 }

@@ -19,7 +19,6 @@ public class HeartBeatBehaviour extends TickerBehaviour {
     @Override
     protected void onTick() {
         if (currentStep < MAX_STEPS) {
-            System.out.println("Agent " + this.agent.getLocalName() + ": tick=" + getTickCount());
             SendBroadcastMessage();
             this.currentStep++;
             block();
